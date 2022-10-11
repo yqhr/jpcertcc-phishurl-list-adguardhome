@@ -12,7 +12,7 @@ script_basename = os.path.basename(__file__)
 script_dirname = os.path.dirname(__file__)
 output_dirname = script_dirname
 blacklist_name = "config-block.json"
-local_adblock_name = "adblock.txt"
+local_adblock_name = "temp_adblock.txt"
 output_block_json = os.path.join(output_dirname, blacklist_name)
 output_local_adblock_txt = os.path.join(output_dirname, local_adblock_name)
 
