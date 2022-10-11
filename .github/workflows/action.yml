@@ -39,6 +39,8 @@ jobs:
           sed '/^$/d' -i $temp
           mv $temp blocklist.txt
           rm -f config-block.json adblock.txt
+          cat blocklist.txt | sed -e "s/||\(.*\)\^/\1/g" > domains.txt
+          cat blocklist.txt | sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" > hosts.txt
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
