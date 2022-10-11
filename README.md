@@ -8,7 +8,7 @@ https://github.com/JPCERTCC/phishurl-list
 
 ## how to use
 
-add following list url as dns blocklists:
+add one of following urls as a dns blocklist:
 
 - adblock-style (for adguardhome):
 
