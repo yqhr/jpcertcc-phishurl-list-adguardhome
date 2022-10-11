@@ -18,6 +18,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16
+    - name: checkout
+      uses: actions/checkout@v3
     - name: install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -26,7 +28,7 @@ jobs:
     - name: update blocklist
       run: | 
           echo "generate config.json"
-          python ./update.py
+          python update.py
           echo "make adguard home's blocklist"
           hostlist-compiler -c config-block.json -v -o blocklist.txt
           # Remove Headers & Comments
