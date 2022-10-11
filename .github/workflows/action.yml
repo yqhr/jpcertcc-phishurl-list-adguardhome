@@ -23,8 +23,7 @@ jobs:
     - name: install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        npm u npm
+        npm update npm
         npm i -g @adguard/hostlist-compiler
     - name: update blocklist
       run: | 
