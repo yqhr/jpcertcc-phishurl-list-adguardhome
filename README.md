@@ -6,15 +6,18 @@ adguardhome blocklist converted from JPCERTCC / phishurl-list (updated monthly):
 https://github.com/JPCERTCC/phishurl-list
 
 
-### how to use
+## how to use
 
 add following list url as dns blocklists:
 
-- for adguardhome
+- for adguardhome:
+
 https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/blocklist.txt
 
-- hosts
+- hosts:
+
 https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/hosts.txt
 
-- domains
+- domains:
+
 https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/domains.txt
