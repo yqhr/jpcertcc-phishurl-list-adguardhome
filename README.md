@@ -5,3 +5,7 @@
 adguardhome blocklist converted from JPCERTCC / phishurl-list:
 https://github.com/JPCERTCC/phishurl-list
 
+# how to use
+
+just add following list url to yout agh dns blocklist:
+https://github.com/yqhr/jpcertcc-phishurl-list-adguardhome/blob/main/blocklist.txt?raw=true
