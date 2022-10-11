@@ -4,7 +4,7 @@ import re
 import csv
 import json
 import zipfile
-import urllib3
+import requests
 from pprint import pprint
 
 
@@ -19,9 +19,8 @@ output_local_adblock_txt = os.path.join(output_dirname, local_adblock_name)
 
 def get_csv_files() -> list:
     url = "https://github.com/JPCERTCC/phishurl-list/archive/refs/heads/main.zip"
-    http = urllib3.PoolManager()
-    r = http.request("GET", url)
-    content = r.data
+    r = requests.get(url)
+    content = r.content
     with zipfile.ZipFile(io.BytesIO(content)) as f:
         csv_paths = [l for l in f.namelist() if ".csv" in l]
         csv_files = [f.read(csv) for csv in csv_paths]
