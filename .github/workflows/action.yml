@@ -22,10 +22,10 @@ jobs:
       uses: actions/checkout@v3
     - name: install dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install requests
-        npm update npm
-        npm i -g @adguard/hostlist-compiler
+          python -m pip install --upgrade pip
+          python -m pip install requests
+          npm update npm
+          npm i -g @adguard/hostlist-compiler
     - name: update blocklist
       run: | 
           echo "generate config.json"
