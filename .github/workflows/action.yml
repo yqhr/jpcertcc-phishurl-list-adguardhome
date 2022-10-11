@@ -1,11 +1,9 @@
 name: autoupdateing blocklist.txt
 
 on:
-  # schedule:
-  #   - cron: "0 0 1 * *"
-  push:
-    branches:
-      - master
+  schedule:
+  - cron: "0 0 1 * *"
+  workflow_dispatch:
 
 jobs:
   build:
