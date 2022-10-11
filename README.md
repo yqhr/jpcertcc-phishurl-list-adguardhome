@@ -10,9 +10,9 @@ https://github.com/JPCERTCC/phishurl-list
 
 add following list url as dns blocklists:
 
-- for adguardhome:
+- adblock-style (for adguardhome):
 
-https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/blocklist.txt
+https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/agh.txt
 
 - hosts:
 
