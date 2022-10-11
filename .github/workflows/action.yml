@@ -38,9 +38,10 @@ jobs:
           # Remove Blank/Empty Lines
           sed '/^$/d' -i $temp
           mv $temp blocklist.txt
-          rm -f config-block.json adblock.txt
+          rm -f config-block.json temp_adblock.txt
           cat blocklist.txt | sed -e "s/||\(.*\)\^/\1/g" | tee > domains.txt
           cat blocklist.txt | sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" | tee > hosts.txt
+          mv blocklist.txt adblock.txt
     - name: deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
