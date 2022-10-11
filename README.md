@@ -12,7 +12,7 @@ add following list url as dns blocklists:
 
 - adblock-style (for adguardhome):
 
-https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/adblock.txt
+https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/blob/main/adblock.txt
 
 - hosts:
 
