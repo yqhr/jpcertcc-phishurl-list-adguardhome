@@ -1,4 +1,4 @@
-name: Autoupdating blocklist.txt
+name: autoupdateing blocklist.txt
 
 on:
   schedule:
