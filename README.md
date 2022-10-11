@@ -8,6 +8,13 @@ https://github.com/JPCERTCC/phishurl-list
 
 ### how to use
 
-just add following list url to yout agh dns blocklist:
+add following list url as dns blocklists:
 
+- for adguardhome
 https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/blocklist.txt
+
+- hosts
+https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/hosts.txt
+
+- domains
+https://raw.githubusercontent.com/yqhr/jpcertcc-phishurl-list-adguardhome/main/domains.txt
