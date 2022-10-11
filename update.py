@@ -45,6 +45,8 @@ def generate_adblock_list() -> list:
         m = re.match(pat, line)
         if m:
             obj = m.groups()[0]
+            if obj[-1] == "/":
+                obj = obj[:-1]
             result += ["||{0}^".format(obj)]
     return result
 
