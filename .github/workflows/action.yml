@@ -42,9 +42,13 @@ jobs:
           cat blocklist.txt | sed -e "s/||\(.*\)\^/\1/g" | tee > domains.txt
           cat blocklist.txt | sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" | tee > hosts.txt
           mv blocklist.txt adblock.txt
-    - name: deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: main
-        FOLDER: .
+    - name: git setting
+      run: |
+        git config --local user.email "yqhr@duck.com"
+        git config --local user.name "yqhr"
+    - name: Commit files
+      run: |
+        git add .
+        git commit -m "update" -a
+        git pull
+        git push origin main
