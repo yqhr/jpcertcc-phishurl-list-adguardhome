@@ -53,4 +53,5 @@ jobs:
         git add .
         git commit -m "update" -a
         git pull
-        git push -f origin main
+        [ "$(git status | grep "nothing to commit")" != "" ] && git push origin main || echo
+        
