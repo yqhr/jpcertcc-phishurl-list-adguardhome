@@ -51,7 +51,7 @@ jobs:
     - name: Commit files
       run: |
         git add .
-        if [ "$(git status | grep "nothing to commit")" != "" ]; then
+        if [ "$(git status | grep "nothing to commit")" == "" ]; then
           git commit -m "update" -a
           git pull
           git push origin main
