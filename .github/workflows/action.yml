@@ -51,7 +51,11 @@ jobs:
     - name: Commit files
       run: |
         git add .
-        git commit -m "update" -a
-        git pull
-        [ "$(git status | grep "nothing to commit")" != "" ] && git push origin main || echo
+        if [ "$(git status | grep "nothing to commit")" != "" ]; then
+          git commit -m "update" -a
+          git pull
+          git push origin main
+        else
+          git reset HEAD
+        fi
         
