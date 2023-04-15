@@ -40,20 +40,25 @@ jobs:
 
       - name: Update Blocklist
         run: |
-          echo "Generating config.json..."
+          echo "Generating config.json"
           python update.py
 
-          echo "Making AdGuard Home's blocklist..."
+          echo "Creating AdGuard Home's blocklist"
           hostlist-compiler -c config-block.json -v -o blocklist.txt
 
-          echo "Cleaning up blocklist.txt..."
-          sed -i -E '/(#|!)/d;/^\s*$/d' blocklist.txt
+          echo "Remove Headers & Comments"
+          temp=$(mktemp)
+          cat blocklist.txt | sed '/#/d' | sed '/!/d' > $temp
 
-          echo "Creating domains.txt and hosts.txt..."
-          sed -E 's/\|\|(.*)\^/\1/g' blocklist.txt > domains.txt
-          sed -E 's/\|\|(.*)\^/0.0.0.0 \1/g' blocklist.txt > hosts.txt
-
-          echo "Renaming blocklist.txt to adblock.txt..."
+          echo "Remove Blank/Empty Lines"
+          sed '/^$/d' -i $temp
+          mv $temp blocklist.txt
+          rm -f config-block.json temp_adblock.txt
+          echo "Make domains.txt"
+          sed -e "s/||\(.*\)\^/\1/g" blocklist.txt > domains.txt
+          echo "Make hosts.txt"
+          sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" blocklist.txt > hosts.txt
+          echo "Rename blocklist"
           mv blocklist.txt adblock.txt
 
       - name: Configure Git
@@ -65,7 +70,7 @@ jobs:
         run: |
           git add .
           if ! git status | grep "nothing to commit"; then
-            git commit -m "Update blocklists" -a
+            git commit -m "Update blocklists"
             git pull
             git push origin ${{ env.DEFAULT_BRANCH }}
           else
