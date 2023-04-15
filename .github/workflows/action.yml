@@ -1,61 +1,73 @@
-name: autoupdateing blocklists
+name: Auto-updating Blocklists
 
 on:
   schedule:
-  - cron: "0 0 * * 0"
+    - cron: '0 0 * * 0'
   workflow_dispatch:
   push:
     branches:
       - '*'
+
+env:
+  GIT_USER_NAME: yqhr
+  GIT_USER_EMAIL: yqhr@duck.com
+  DEFAULT_BRANCH: main
+
 jobs:
-  build:
+  update-blocklists:
     runs-on: ubuntu-latest
-  
+
     steps:
-    - name: setup python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10' 
-    - name: setup nodejs
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-    - name: checkout
-      uses: actions/checkout@v3
-    - name: install dependencies
-      run: |
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
           python -m pip install --upgrade pip
           python -m pip install requests
           npm update npm
           npm i -g @adguard/hostlist-compiler
-    - name: update blocklist
-      run: | 
-          echo "generate config.json"
+
+      - name: Update Blocklist
+        run: |
+          echo "Generating config.json..."
           python update.py
-          echo "make adguard home's blocklist"
+
+          echo "Making AdGuard Home's blocklist..."
           hostlist-compiler -c config-block.json -v -o blocklist.txt
-          # Remove Headers & Comments
-          temp=$(mktemp)
-          cat blocklist.txt | sed '/#/d' | sed '/!/d' > $temp
-          # Remove Blank/Empty Lines
-          sed '/^$/d' -i $temp
-          mv $temp blocklist.txt
-          rm -f config-block.json temp_adblock.txt
-          cat blocklist.txt | sed -e "s/||\(.*\)\^/\1/g" | tee > domains.txt
-          cat blocklist.txt | sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" | tee > hosts.txt
+
+          echo "Cleaning up blocklist.txt..."
+          sed -i -E '/(#|!)/d;/^\s*$/d' blocklist.txt
+
+          echo "Creating domains.txt and hosts.txt..."
+          sed -E 's/\|\|(.*)\^/\1/g' blocklist.txt > domains.txt
+          sed -E 's/\|\|(.*)\^/0.0.0.0 \1/g' blocklist.txt > hosts.txt
+
+          echo "Renaming blocklist.txt to adblock.txt..."
           mv blocklist.txt adblock.txt
-    - name: git setting
-      run: |
-        git config --local user.email "yqhr@duck.com"
-        git config --local user.name "yqhr"
-    - name: Commit files
-      run: |
-        git add .
-        if [ "$(git status | grep "nothing to commit")" == "" ]; then
-          git commit -m "update" -a
-          git pull
-          git push origin main
-        else
-          git reset HEAD
-        fi
-        
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "${{ env.GIT_USER_EMAIL }}"
+          git config --local user.name "${{ env.GIT_USER_NAME }}"
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          if ! git status | grep "nothing to commit"; then
+            git commit -m "Update blocklists" -a
+            git pull
+            git push origin ${{ env.DEFAULT_BRANCH }}
+          else
+            echo "No changes detected, skipping commit and push."
+          fi
