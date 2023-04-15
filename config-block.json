@@ -1,0 +1,18 @@
+{
+   "name": "JPCERTCC-phishurl-list",
+   "description": "ref: https://github.com/JPCERTCC/phishurl-list/",
+   "sources": [
+      {
+         "source": "/home/runner/work/jpcertcc-phishurl-list-adguardhome/jpcertcc-phishurl-list-adguardhome/temp_adblock.txt",
+         "type": "adblock",
+         "transformations": [
+            "Validate"
+         ]
+      }
+   ],
+   "transformations": [
+      "RemoveComments",
+      "Deduplicate"
+   ],
+   "exclusions": []
+}
