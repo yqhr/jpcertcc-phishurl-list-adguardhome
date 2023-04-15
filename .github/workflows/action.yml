@@ -60,6 +60,7 @@ jobs:
           sed -e "s/||\(.*\)\^/0\.0\.0\.0 \1/g" blocklist.txt > hosts.txt
           echo "Rename blocklist"
           mv blocklist.txt adblock.txt
+          rm package-lock.json
 
       - name: Configure Git
         run: |
