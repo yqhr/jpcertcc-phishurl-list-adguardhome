@@ -31,9 +31,7 @@ def read_csv_files_as_dict(file_content: bytes) -> list:
         return [r for r in reader]
 
 def generate_url_list(csv_files: list) -> set:
-    L = list()
-    for c in csv_files:
-        L += read_csv_files_as_dict(c)
+    L = [read_csv_files_as_dict(csv_file) for csv_file in csv_files] 
     return {d["URL"] for d in L}
 
 def generate_adblock_list(url_list: set) -> list:
