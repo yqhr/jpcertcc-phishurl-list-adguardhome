@@ -10,7 +10,7 @@ on:
 
 env:
   GIT_USER_NAME: yqhr
-  GIT_USER_EMAIL: github.popper372@slmail.me
+  GIT_USER_EMAIL: git.residency472@slmail.me
   DEFAULT_BRANCH: main
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.13'
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -32,9 +32,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install requests
+        run: | 
           npm update npm
           npm i -g @adguard/hostlist-compiler
 

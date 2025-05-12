@@ -4,8 +4,7 @@ import re
 import csv
 import json
 import zipfile
-import requests
-from pprint import pprint
+import urllib.request
 
 
 script_basename = os.path.basename(__file__)
@@ -18,11 +17,11 @@ output_local_adblock_txt = os.path.join(output_dirname, local_adblock_name)
 
 
 def get_csv_files(url: str) -> list:
-    r = requests.get(url)
-    content = r.content
-    with zipfile.ZipFile(io.BytesIO(content)) as f:
-        csv_paths = [l for l in f.namelist() if l.endswith(".csv")]
-        csv_files = [f.read(csv) for csv in csv_paths]
+    with urllib.request.urlopen(url) as response:
+        content = response.read()
+        with zipfile.ZipFile(io.BytesIO(content)) as f:
+            csv_paths = [l for l in f.namelist() if l.endswith(".csv")]
+            csv_files = [f.read(csv) for csv in csv_paths]
     return csv_files
 
 def read_csv_files_as_dict(file_content: bytes) -> list:
@@ -48,7 +47,7 @@ def generate_adblock_list(url_list: set) -> list:
             result += ["||{0}^".format(obj)]
     return result
 
-def write_to_json(adblock_list: list, output_local_adblock_txt: str, output_block_json: str):
+def write_to_json(adblock_list: list, output_local_adblock_txt: str, output_block_json: str) -> None:
     with open(output_local_adblock_txt, "w", encoding="utf-8") as f:
         f.write("\n".join(sorted(adblock_list)))
     sources = [{"source": output_local_adblock_txt, "type": "adblock", "transformations": ["Validate"]}]
@@ -62,7 +61,7 @@ def write_to_json(adblock_list: list, output_local_adblock_txt: str, output_bloc
     with open(output_block_json, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=3)
 
-def main():
+def main() -> None:
     url = "https://github.com/JPCERTCC/phishurl-list/archive/refs/heads/main.zip"
     csv_files = get_csv_files(url)
     url_list = generate_url_list(csv_files)
