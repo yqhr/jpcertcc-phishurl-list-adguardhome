@@ -9,8 +9,6 @@ on:
       - '*'
 
 env:
-  GIT_USER_NAME: yqhr
-  GIT_USER_EMAIL: git.residency472@slmail.me
   DEFAULT_BRANCH: main
 
 jobs:
